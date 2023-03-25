@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  chatgpt_slack_bot:
+    container_name: chatgpt_slack_bot
+    command: python3 bot/bot.py
+    build:
+      context: "."
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - ./bot:/code/bot
+    restart: unless-stopped

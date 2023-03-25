@@ -1,0 +1,37 @@
+{
+  "display_information": {
+    "name": "ChatGPT",
+    "description": "ChatGPT bot",
+    "background_color": "#000000"
+  },
+  "features": {
+    "bot_user": {
+      "display_name": "ChatGPT bot",
+      "always_online": false
+    }
+  },
+  "oauth_config": {
+    "scopes": {
+      "bot": [
+        "app_mentions:read",
+        "channels:history",
+        "channels:read",
+        "chat:write",
+        "groups:history"
+      ]
+    }
+  },
+  "settings": {
+    "event_subscriptions": {
+      "bot_events": [
+        "app_mention"
+      ]
+    },
+    "interactivity": {
+      "is_enabled": true
+    },
+    "org_deploy_enabled": false,
+    "socket_mode_enabled": true,
+    "token_rotation_enabled": false
+  }
+}
