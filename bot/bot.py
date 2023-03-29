@@ -14,9 +14,9 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = AsyncApp(token=config.SLACK_BOT_TOKEN) 
-# client = WebClient(config.SLACK_BOT_TOKEN)
 client = AsyncWebClient(config.SLACK_BOT_TOKEN)
 openai.api_key = config.OPENAI_API_KEY
+model = config.GPT_MODEL
 
 OPENAI_COMPLETION_OPTIONS = {
     "temperature": 0.7,
