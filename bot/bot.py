@@ -27,7 +27,8 @@ OPENAI_COMPLETION_OPTIONS = {
 }
 
 @app.event("app_mention")
-async def handle_message_events(body, logger):
+@app.event({"type": "message", "channel_type": "im"})
+async def handle_mention(body, logger):
     logger.info(f"New event: {body}")
 
     event = body["event"]
@@ -61,7 +62,7 @@ async def handle_message_events(body, logger):
     messages.append({"role": "user", "content": user_message })
 
     ai_response = await openai.ChatCompletion.acreate(
-            model="gpt-3.5-turbo",
+            model=model,
             messages=messages,
             **OPENAI_COMPLETION_OPTIONS
             )

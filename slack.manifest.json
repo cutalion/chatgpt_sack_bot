@@ -17,14 +17,18 @@
         "channels:history",
         "channels:read",
         "chat:write",
-        "groups:history"
+        "groups:history",
+        "im:history",
+        "im:read",
+        "groups:read"
       ]
     }
   },
   "settings": {
     "event_subscriptions": {
       "bot_events": [
-        "app_mention"
+        "app_mention",
+        "message.im"
       ]
     },
     "interactivity": {
