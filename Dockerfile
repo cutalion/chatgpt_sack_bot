@@ -12,7 +12,7 @@ RUN apt-get update
 RUN apt-get install -y --no-install-recommends \
     python3 \
     python3-pip \
-    python-dev \
+    python-dev-is-python3 \
     build-essential \
     python3-venv \
     ffmpeg \

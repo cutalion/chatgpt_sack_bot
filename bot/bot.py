@@ -1,21 +1,19 @@
 import os
 import logging
 import config
-import openai
-
+import asyncio
+from openai import AsyncOpenAI
 from slack_bolt.adapter.socket_mode.async_handler import AsyncSocketModeHandler
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 from slack import WebClient, AsyncWebClient
 from slack_bolt import App
 from slack_bolt.async_app import AsyncApp
-import asyncio
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 app = AsyncApp(token=config.SLACK_BOT_TOKEN) 
 client = AsyncWebClient(config.SLACK_BOT_TOKEN)
-openai.api_key = config.OPENAI_API_KEY
 model = config.GPT_MODEL
 
 OPENAI_COMPLETION_OPTIONS = {
@@ -25,6 +23,8 @@ OPENAI_COMPLETION_OPTIONS = {
     "frequency_penalty": 0,
     "presence_penalty": 0
 }
+
+aclient = AsyncOpenAI(api_key=config.OPENAI_API_KEY)
 
 @app.event("app_mention")
 @app.event({"type": "message", "channel_type": "im"})
@@ -61,13 +61,12 @@ async def handle_mention(body, logger):
 
     messages.append({"role": "user", "content": user_message })
 
-    ai_response = await openai.ChatCompletion.acreate(
+    ai_response = await aclient.chat.completions.create(
             model=model,
             messages=messages,
-            **OPENAI_COMPLETION_OPTIONS
-            )
+            **OPENAI_COMPLETION_OPTIONS)
 
-    ai_reply = ai_response.choices[0].message['content']
+    ai_reply = ai_response.choices[0].message.content
     await client.chat_postMessage(channel=channel, thread_ts=event_ts, text=ai_reply)
 
 async def run():
